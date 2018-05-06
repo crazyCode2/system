@@ -1,5 +1,5 @@
 /**
- * 首页(Main)
+ * 主页面(Main)
  */
 import React ,{Component} from 'react'
 import DocumentTitle from 'react-document-title'

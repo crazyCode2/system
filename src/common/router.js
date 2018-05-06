@@ -88,13 +88,13 @@ export const getRouterData = () => {
       component:UserAdd, // 添加用户
       authority:'admin'
     },
-    '/exception/403': {
+    '/exception/403': { // 无权访问该页面
       component: Unauthorized,
     },
-    '/exception/404': {
+    '/exception/404': { // 访问的页面不存在
       component: NotFound,
     },
-    '/exception/500': {
+    '/exception/500': { // 服务器出错
       component: ServerError,
     },
   }

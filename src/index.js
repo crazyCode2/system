@@ -1,6 +1,11 @@
 /**
  * 项目入口文件
  */
+/**
+ * babel-polyfill
+ * 为当前环境提供一个垫片
+ * 用于实现浏览器不支持原生功能的代码
+ */
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
@@ -9,13 +14,10 @@ import { render } from 'react-dom';
  * Provider 提供的是一个顶层容器的作用，实现store的上下文传递
  * connect 可以把state和dispatch绑定到react组件，使得组件可以访问到redux的数据
  */
-import {
-  connect,
-  Provider
-} from 'react-redux';
+import { Provider } from 'react-redux';
 
-import store ,{history} from './store'
-import { ConnectedRouter } from 'react-router-redux'
+import store ,{history} from './store';
+import { ConnectedRouter } from 'react-router-redux';
 /**
  * 引入 react-router-dom
  * Route 是路由的一个原材料，它是控制路径对应显示的组件。我们经常用的是exact、path以及component属性。
@@ -35,7 +37,7 @@ import Authorized from './utils/Authorized';
  * 引入 ant-design 样式表
  */
 import 'ant-design-pro/dist/ant-design-pro.css';
-
+// Authorized.AuthorizedRoute
 const { AuthorizedRoute } = Authorized;
 
 const routerData = getRouterData();
@@ -55,8 +57,8 @@ render(
         <AuthorizedRoute
           path="/"
           render={props => <BaseLayout {...props} />}
-          authority={['admin', 'user']}
-          redirectPath="/user/login"
+          authority={['admin', 'user']} // 准入权限/权限判断
+          redirectPath="/user/login" // 权限异常时重定向的页面路由
         />
       </Switch>
     </ConnectedRouter>
