@@ -26,7 +26,7 @@ import {
   Switch
 } from 'react-router-dom';
 /**
- * 引入 路由
+ * 获取所有路由数据
  */
 import { getRouterData } from './common/router';
 
@@ -39,9 +39,9 @@ import 'ant-design-pro/dist/ant-design-pro.css';
 const { AuthorizedRoute } = Authorized;
 
 const routerData = getRouterData();
-// 普通权限
+// 后台布局
 const BaseLayout = routerData['/'].component;
-// 管理员权限
+// 登录布局
 const UserLayout = routerData['/user'].component;
 
 render(

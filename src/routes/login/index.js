@@ -88,8 +88,8 @@ class LoginPage extends Component {
             login.type === 'account' &&
             <Alert style={{marginBottom: 24}} message={'账号密码错误'} type="error" showIcon closable />
           }
-          <UserName name="username" placeholder="admin/user"  />
-          <Password name="password" placeholder="888888/123456" />
+          <UserName name="username" placeholder="请输入用户名"  />
+          <Password name="password" placeholder="请输入密码" />
           <div>
             <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>自动登录</Checkbox>
           </div>

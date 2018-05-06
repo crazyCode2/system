@@ -5,8 +5,14 @@ import createSagaMiddleware from 'redux-saga';
 import createHistory from 'history/createBrowserHistory';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
+/**
+ * 同步redux
+ */
 import reducer from '../redux/index';
-import  rootSaga from '../saga/index';
+/**
+ * 异步redux
+ */
+import rootSaga from '../saga/index';
 
 const history = createHistory()
 

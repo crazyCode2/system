@@ -1,9 +1,20 @@
 /**
  * 路由配置文件
  */
-import {createElement} from 'react'
+import {createElement} from 'react';
+/**
+ * dva路由跳转
+ * dynamic(app, model, component )
+ * 第一个参数为挂载的对象，就是你要将这个router挂载到哪个实例上。
+ * 第二个参数为这个router所需要的model。
+ * 第三个参数为这个router的组件。
+ */
+// import dynamic from 'dva/dynamic';
+// 获取侧边菜单数据
 import { getMenuData } from './menu';
+// 路由正则验证
 import pathToRegexp from 'path-to-regexp';
+
 // 登录页
 import LoginPage from '../routes/login/index';
 // 首页
@@ -18,18 +29,27 @@ import UserLayout from '../layouts/UserLayout';
 import Analysis  from '../routes/Dashboard/Analysis'
 // 用户管理页
 import UserManager from '../routes/user';
+// 用户列表页
 import UserList from '../routes/user/list';
+// 添加用户页
 import UserAdd from '../routes/user/add';
+// 403 无权访问
+import Unauthorized from '../routes/Exception/403';
+// 404 访问的页面不存在
+import NotFound from '../routes/Exception/404';
+// 500 服务器出错
+import ServerError from '../routes/Exception/500';
 
 // 路由数据
 let routerDataCache;
 
+// 获取菜单层级数据
 function getFlatMenuData(menus) {
   let keys = {};
   menus.forEach((item) => {
     if (item.children) {
       keys[item.path] = { ...item };
-      keys = { ...keys, ...getFlatMenuData(item.children) };
+      keys = { ...keys, ...getFlatMenuData(item.children) }; // 递归
     } else {
       keys[item.path] = { ...item };
     }
@@ -40,6 +60,7 @@ function getFlatMenuData(menus) {
 
 
 export const getRouterData = () => {
+  // 配置路由
   const routerConfig = {
     "/":{
       component: BasicLayout, // 后台布局
@@ -67,10 +88,20 @@ export const getRouterData = () => {
       component:UserAdd, // 添加用户
       authority:'admin'
     },
+    '/exception/403': {
+      component: Unauthorized,
+    },
+    '/exception/404': {
+      component: NotFound,
+    },
+    '/exception/500': {
+      component: ServerError,
+    },
   }
-     
+  
+  // 从 ./menu.js 中获取名称或将其设置在路由器数据中
   const menuData = getFlatMenuData(getMenuData());
-
+  // 路由配置数据
   const routerData = {};
 
   // 路由匹配菜单
@@ -92,6 +123,7 @@ export const getRouterData = () => {
       ...router,
       name: router.name || menuItem.name,
       authority: router.authority || menuItem.authority,
+      hideInBreadcrumb: router.hideInBreadcrumb || menuItem.hideInBreadcrumb,
     };
     routerData[path] = router;
   });
