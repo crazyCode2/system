@@ -1,40 +1,23 @@
 /**
  * 主页面(Main)
  */
-import React ,{Component} from 'react'
-import DocumentTitle from 'react-document-title'
-import { Layout, Icon, message, Menu} from 'antd';
-import {Switch,Route} from 'react-router-dom'
-import classNames from 'classnames';
+import React ,{Component} from 'react';
+// 页面标题
+import DocumentTitle from 'react-document-title';
+// 引入 antd UI 库
+import { Layout } from 'antd';
+// 引入 路由
+import {Switch,Route} from 'react-router-dom';
+// 媒体查询(页面自适应)
 import { enquireScreen } from 'enquire-js';
-import logo from '../../assets/logo.svg';
-import styles from  './home.less';
+// 侧边菜单栏
 import SiderMenu from '../../components/SiderMenu';
+// 页头
 import GlobalHeader from '../../components/GlobalHeader';
+// 用户管理页
 import User from '../user';
 
-const { Header, Sider, Content } = Layout;
-
-const query = {
-  'screen-xs': {
-    maxWidth: 575,
-  },
-  'screen-sm': {
-    minWidth: 576,
-    maxWidth: 767,
-  },
-  'screen-md': {
-    minWidth: 768,
-    maxWidth: 991,
-  },
-  'screen-lg': {
-    minWidth: 992,
-    maxWidth: 1199,
-  },
-  'screen-xl': {
-    minWidth: 1200,
-  },
-};
+const { Content } = Layout;
 
 let isMobile;
 enquireScreen((b) => {

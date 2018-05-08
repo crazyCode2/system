@@ -17,17 +17,15 @@ const menuData = [
     name: '系统设置',
     icon: 'user',
     path: 'syster',
-    authority: 'admin',
     children: [{
       name: '用户管理',
       path: 'user',
-      authority:'admin',
     }]
   }
 ]
 
 // 数据过滤处理
-function formatter(data, parentPath = '', parentAuthority) {
+function formatter(data, parentPath = '') {
   return data.map((item) => {
     let { path } = item;
     if (!isUrl(path)) {
@@ -36,10 +34,9 @@ function formatter(data, parentPath = '', parentAuthority) {
     const result = {
       ...item,
       path,
-      authority: item.authority || parentAuthority,
     };
     if (item.children) {
-      result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
+      result.children = formatter(item.children, `${parentPath}${item.path}/`);
     }
     return result;
   });

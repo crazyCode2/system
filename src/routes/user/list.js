@@ -6,16 +6,16 @@ import {connect} from 'react-redux'
 import {history} from '../../store'
 import styles from './index.less'
 import { Row, Col, Card, Form, Input, Select, 
-  Icon, Button, Dropdown, Menu, 
-  InputNumber, DatePicker, Modal, message, Badge, Divider,Table } from 'antd';
-import moment from 'moment';
+  Button,
+   DatePicker, Badge, Table } from 'antd';
+// import moment from 'moment';
 
 // 日期选择器
 const {RangePicker} = DatePicker;
 
 const FormItem = Form.Item;
 const { Option } = Select;
-const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
+// const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 const statusMap = ['success', 'error'];
 const status = ['启用', '禁用',];
 const columns = [
@@ -60,7 +60,7 @@ const columns = [
   },
 ];
 
-const CreateForm = Form.create({});
+// const CreateForm = Form.create({});
 
 /**
  *  用户列表

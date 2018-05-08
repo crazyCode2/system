@@ -1,9 +1,10 @@
 /**
- * 特殊情况
+ * 异常情况
  */
 import React, { createElement } from 'react';
 import classNames from 'classnames';
 import { Button } from 'antd';
+// 异常情况配置文件
 import config from './typeConfig';
 import styles from './index.less';
 

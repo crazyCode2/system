@@ -16,7 +16,7 @@ import { render } from 'react-dom';
  */
 import { Provider } from 'react-redux';
 
-import store ,{history} from './store';
+import store ,{ history } from './store';
 import { ConnectedRouter } from 'react-router-redux';
 /**
  * 引入 react-router-dom
@@ -31,15 +31,15 @@ import {
  * 获取所有路由数据
  */
 import { getRouterData } from './common/router';
-
-import Authorized from './utils/Authorized';
 /**
  * 引入 ant-design 样式表
  */
 import 'ant-design-pro/dist/ant-design-pro.css';
+
+import Authorized from './utils/Authorized';
 // Authorized.AuthorizedRoute
 const { AuthorizedRoute } = Authorized;
-
+// 所有路由数据
 const routerData = getRouterData();
 // 后台布局
 const BaseLayout = routerData['/'].component;
@@ -57,7 +57,6 @@ render(
         <AuthorizedRoute
           path="/"
           render={props => <BaseLayout {...props} />}
-          authority={['admin', 'user']} // 准入权限/权限判断
           redirectPath="/user/login" // 权限异常时重定向的页面路由
         />
       </Switch>

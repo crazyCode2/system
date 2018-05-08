@@ -5,26 +5,25 @@
 import React from 'react';
 // 页面标题
 import DocumentTitle from 'react-document-title';
+// 图标
 import { Icon } from 'antd';
-// 经授权的
-import Authorized from '../utils/Authorized';
+// 路由
 import { Switch, Link, Route, Redirect } from 'react-router-dom';
-// 底边栏
+// 页脚
 import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
+// 获取路由器路由配置
 import { getRoutes } from '../utils/utils';
 // 引入 层叠样式表
 import styles from './UserLayout.less';
 // logo 图标
 import logo from '../assets/logo.svg';
 // 引入 登录页
-import LoginPage from '../routes/login/index';
-// 获取授权
-import { getAuthority } from '../utils/authority';
+// import LoginPage from '../routes/login/index';
 // 版权
-const copyright = <div>Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品</div>;
+const copyright = <div>Copyright <Icon type="copyright" /> 2018 润安科技发展有限公司</div>;
 // 登录布局
 class UserLayout extends React.PureComponent {
-  
+  // 获取页面标题
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
@@ -45,7 +44,7 @@ class UserLayout extends React.PureComponent {
               <div className={styles.header}>
                 <Link to="/">
                   <img alt="logo" className={styles.logo} src={logo} />
-                  <span className={styles.title}>Ant Design</span>
+                  <span className={styles.title}>计分考核系统</span>
                 </Link>
               </div>
               <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
@@ -53,14 +52,6 @@ class UserLayout extends React.PureComponent {
             <Switch>
               {getRoutes(match.path, routerData).map(item =>
                 (
-                  // <AuthorizedRoute
-                  //   key={item.key}
-                  //   path={item.path}
-                  //   component={item.component}
-                  //   exact={item.exact}
-                  //   authority={item.authority}
-                  //   redirectPath="/exception/403"
-                  // />
                   <Route
                     key={item.key}
                     path={item.path}
@@ -73,6 +64,7 @@ class UserLayout extends React.PureComponent {
               <Redirect exact from="/user" to="/user/login" />
             </Switch>
           </div>
+          {/*页脚*/}
           <GlobalFooter copyright={copyright} />
         </div>
       </DocumentTitle>

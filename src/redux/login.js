@@ -2,9 +2,7 @@
  * login reducer
  */
 // 严格模式
-'use strict'
-// 设置权限
-import { setAuthority } from '../utils/authority';
+// 'use strict'
 // 初始化状态
 const initstate = {
   status: undefined, // 状态
@@ -12,15 +10,12 @@ const initstate = {
 }
 
 // 账号密码登录
-function commonlogin(state,type,payload){
-  // 设置权限
-  setAuthority(payload.currentAuthority);
-  
+function commonlogin(state,type,payload){  
   return {
     ...state,
     status:payload.status,
     type:payload.type,
-    submitting:payload.status == 'error'?false:true,
+    submitting:payload.status === 'error'?false:true,
   }
 }
 

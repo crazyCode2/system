@@ -6,38 +6,32 @@
  * PureComponent 纯组件
  * 把继承类从 Component 换成 PureComponent 即可，可以减少不必要的 render操作的次数，从而提高性能
  */
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
+// 页面标题
 import DocumentTitle from 'react-document-title';
+// React.PropTypes返回的是一系列验证函数，用于确保接收的数据类似是否是有效的
 import PropTypes from 'prop-types';
-import { Layout, Icon, message, Menu} from 'antd';
-import {Switch,Route,Redirect,HashRouter} from 'react-router-dom'
+// 引入 antd UI库
+import { Layout, message } from 'antd';
+// 引入路由
+import { Switch, Route, Redirect } from 'react-router-dom';
 import classNames from 'classnames';
 // 获取菜单栏信息
 import { getMenuData } from '../common/menu';
 // 响应css媒体查询的轻量级javascript库
 import { enquireScreen } from 'enquire-js';
-import logo from '../assets/logo.svg';
-import styles from  './BaseLayout.less';
 // 侧边菜单栏
 import SiderMenu from '../components/SiderMenu';
-// 顶部标题栏
+// 顶部标题栏(页头)
 import GlobalHeader from '../components/GlobalHeader';
+// connect 可以把state和dispatch绑定到react组件，使得组件可以访问到redux的数据
 import {connect} from 'react-redux';
-// 已经授权
-import Authorized from '../utils/Authorized';
-// 获取路由
+// 获取路由器路由配置
 import { getRoutes } from '../utils/utils';
-
+// 媒体查询 响应式组件
 import { ContainerQuery } from 'react-container-query';
-
-// 用户列表页
-import UserList from '../routes/user/list'
-// 添加用户
-import UserAdd from '../routes/user/add'
-
-const { Header, Sider, Content } = Layout;
-
-const { AuthorizedRoute } = Authorized;
+// 布局--内容部分
+const { Content } = Layout;
 
 /**
  * 根据菜单取得重定向地址.
@@ -59,7 +53,26 @@ const getRedirect = (item) => {
 getMenuData().forEach(getRedirect);
 
 /**
- * 屏幕
+ * 获取面包屑映射
+ * @param {Object} menuData 菜单配置
+ * @param {Object} routerData 路由配置
+ */
+const getBreadcrumbNameMap = (menuData, routerData) => {
+  const result = {};
+  const childResult = {};
+  for (const i of menuData) {
+    if (!routerData[i.path]) {
+      result[i.path] = i;
+    }
+    if (i.children) {
+      Object.assign(childResult, getBreadcrumbNameMap(i.children, routerData));
+    }
+  }
+  return Object.assign({}, routerData, result, childResult);
+};
+
+/**
+ * 媒体查询
  */
 const query = {
   'screen-xs': {
@@ -88,11 +101,12 @@ enquireScreen((b) => {
 });
 
 class BasicLayout extends PureComponent{
-  // 组件传参
+  // 定义静态变量
   static childContextTypes = {
-    location: PropTypes.object,
+    location: PropTypes.object, // 验证,必须为对象
     breadcrumbNameMap: PropTypes.object,
   }
+  
   // 初始化状态值
   state = {
     isMobile,
@@ -103,7 +117,7 @@ class BasicLayout extends PureComponent{
     const { location, routerData } = this.props;
     return {
       location,
-      breadcrumbNameMap: routerData,
+      breadcrumbNameMap: getBreadcrumbNameMap(getMenuData(), routerData),
     };
   }
   
@@ -139,10 +153,6 @@ class BasicLayout extends PureComponent{
 
   // 底部header菜单栏点击事件
   handleMenuClick = ({ key }) => {
-    if (key === 'triggerError') {
-      //this.props.dispatch(routerRedux.push('/exception/trigger'));
-      return;
-    }
     if (key === 'logout') {
       this.props.dispatch({
         type: 'logout',
@@ -167,43 +177,25 @@ class BasicLayout extends PureComponent{
       });
     }
   }
-
-  // 根据URL参数重定向
-  getBashRedirect = () => {
-    // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
-    const urlParams = new URL(window.location.href);
-
-    const redirect = urlParams.searchParams.get('redirect');
-    // 删除URL中的参数
-    if (redirect) {
-      urlParams.searchParams.delete('redirect');
-      window.history.replaceState(null, 'redirect', urlParams.href);
-    } else {
-      return '/dashboard/analysis';
-    }
-    return redirect;
-  }
       
   render() {
-    // 重定向
-    // const bashRedirect = this.getBashRedirect();
-    // props
     const {
       currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
     } = this.props;
     // 布局
     const layout = (
       <Layout>
+        {/*侧边菜单栏*/}
         <SiderMenu
           menuData={getMenuData()}
           location={location}
           collapsed={collapsed}
           isMobile={this.state.isMobile}
-          Authorized={Authorized}
           onCollapse={this.handleMenuCollapse}
         />
 
         <Layout>
+          {/*页头*/}
           <GlobalHeader
             fetchingNotices={fetchingNotices}
             notices={notices}
@@ -214,6 +206,7 @@ class BasicLayout extends PureComponent{
             onNoticeVisibleChange={this.handleNoticeVisibleChange}
             onNoticeClear={this.handleNoticeClear}
           />
+          {/*内容部分*/}
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
               {
@@ -225,13 +218,11 @@ class BasicLayout extends PureComponent{
               {
                 getRoutes(match.path, routerData).map(item =>
                   (
-                    <AuthorizedRoute
+                    <Route
                       key={item.key}
                       path={item.path}
                       component={item.component}
                       exact={item.exact}
-                      authority={item.authority}
-                      redirectPath="/exception/403"
                     />
                   )
                 )

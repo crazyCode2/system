@@ -7,26 +7,16 @@ import React, { Component } from 'react';
  * connect 可以把state和dispatch绑定到react组件，使得组件可以访问到redux的数据
  */
 import { connect } from 'react-redux';
-/**
- * Link是react路由中的点击切换到哪一个组件的链接
- */
-import { Link } from 'react-router-dom';
 // 引入 antd UI库
-import { Icon, Alert, Checkbox } from 'antd';
-// 引入 logo
-import logo from '../../assets/logo.svg';
+import { Alert, Checkbox } from 'antd';
 // 引入 ant-design-pro
 import Login from 'ant-design-pro/lib/Login';
 // 引入 样式表
 import styles from './login.less';
-// 引入 GlobalFooter
-import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
-// 引入 react-document-title
-import DocumentTitle from 'react-document-title';
 // 引入 react-router-redux
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
+const { UserName, Password, Submit } = Login;
 
 // 登录页 组件
 class LoginPage extends Component {
@@ -36,13 +26,6 @@ class LoginPage extends Component {
     autoLogin: true,
   }
 
-  // 选项卡切换事件
-  onTabChange = (key) => {
-    this.setState({
-      type: key
-    })
-  }
-
   // 登录按钮点击事件
   onSubmit = (err, values) => {
     const { type } = this.state;
@@ -50,14 +33,14 @@ class LoginPage extends Component {
     if(!err){
       // 向 redux 传参,调用 action
       this.props.dispatch({
-        type: 'loading'
+        type: 'loading' // 触发 redux --> login
       })
 
       setTimeout(() => {
         this.props.dispatch({
-          type:'getToken',
+          type:'getToken', // 触发 saga --> loginSaga
           payload:{
-            ...values,
+            ...values, // {username:'',password:''}
             type,
           }
         })
@@ -75,12 +58,11 @@ class LoginPage extends Component {
   // 页面渲染
   render(){
     const { login } = this.props;
+    // console.log(this.props);
 
     return (
       <div className={styles.main}>
         <Login
-          defaultActiveKey={this.state.type}
-          onTabChange={this.onTabChange}
           onSubmit={this.onSubmit}
         >
           {

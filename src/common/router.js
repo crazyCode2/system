@@ -1,7 +1,7 @@
 /**
  * 路由配置文件
  */
-import {createElement} from 'react';
+// import {createElement} from 'react';
 /**
  * dva路由跳转
  * dynamic(app, model, component )
@@ -18,11 +18,11 @@ import pathToRegexp from 'path-to-regexp';
 // 登录页
 import LoginPage from '../routes/login/index';
 // 首页
-import Main from '../routes/home/index';
+// import Main from '../routes/home/index';
 // 基础页面(页面布局--普通用户)
 import BasicLayout from '../layouts/BaseLayout';
 // 用户管理页
-import User from '../routes/user/index';
+// import User from '../routes/user/index';
 // 用户管理页(页面布局--管理员)
 import UserLayout from '../layouts/UserLayout';
 // 分析页
@@ -41,7 +41,7 @@ import NotFound from '../routes/Exception/404';
 import ServerError from '../routes/Exception/500';
 
 // 路由数据
-let routerDataCache;
+// let routerDataCache;
 
 // 获取菜单层级数据
 function getFlatMenuData(menus) {
@@ -57,8 +57,6 @@ function getFlatMenuData(menus) {
   return keys;
 }
 
-
-
 export const getRouterData = () => {
   // 配置路由
   const routerConfig = {
@@ -70,23 +68,18 @@ export const getRouterData = () => {
     },
     "/user/login":{
       component:LoginPage, // 登录页
-      authority:'guest',
     },
     "/dashboard/analysis":{
       component:Analysis, // 总览
-      authority:'admin'
     },
     "/syster/user":{
       component:UserManager, // 用户管理页
-      authority:'admin'
     },
     "/syster/user/list":{
       component:UserList, // 用户列表
-      authority:'admin'
     },
     "/syster/user/add":{
       component:UserAdd, // 添加用户
-      authority:'admin'
     },
     '/exception/403': { // 无权访问该页面
       component: Unauthorized,
@@ -122,7 +115,6 @@ export const getRouterData = () => {
     router = {
       ...router,
       name: router.name || menuItem.name,
-      authority: router.authority || menuItem.authority,
       hideInBreadcrumb: router.hideInBreadcrumb || menuItem.hideInBreadcrumb,
     };
     routerData[path] = router;

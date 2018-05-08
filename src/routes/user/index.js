@@ -2,15 +2,15 @@
  *  用户管理页面(User)
  */
 import React, { PureComponent } from 'react';
-import {Route,Router,Link,Switch,Redirect} from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import {connect} from 'react-redux'
-import Styles from './index.less'
+// import Styles from './index.less'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout'
 import { getRoutes } from '../../utils/utils';
 // 用户列表
-import UserList from './list'
+// import UserList from './list'
 // 添加用户
-import UserAdd from './add'
+// import UserAdd from './add'
 
 class User extends PureComponent{
 
@@ -36,7 +36,7 @@ class User extends PureComponent{
   }
 
   render(){
-    const { match, routerData, location } = this.props;
+    const { match, routerData } = this.props;
     const routes = getRoutes(match.path, routerData);
 
     return (
