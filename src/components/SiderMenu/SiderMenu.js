@@ -170,7 +170,7 @@ export default class SiderMenu extends PureComponent {
         target={target}
         replace={itemPath === this.props.location.pathname}
         onClick={this.props.isMobile ? () => { this.props.onCollapse(true); } : undefined}
-        
+
       >
         {icon}<span>{name}</span>
       </Link>
@@ -242,7 +242,7 @@ export default class SiderMenu extends PureComponent {
         <div className={styles.logo}>
           <a href="/">
             <img src={logo_url} alt="logo" />
-            <h1>计分考核系统</h1>
+            <h1>漫画 && 视频</h1>
           </a>
         </div>
         {/*菜单*/}

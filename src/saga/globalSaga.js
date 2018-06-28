@@ -10,7 +10,7 @@ function* fetchNotices(){
   const data = yield call(queryNotices);
 
   yield put({
-    type: 'saveNotices', // 
+    type: 'saveNotices', //
     payload: data,
   });
 
@@ -32,7 +32,7 @@ function* clearNotices({payload}){
   });
 }
 
-//
+// 全局数据
 function* global() {
   // 请求通知栏数据
   yield takeLatest('fetchNotices', fetchNotices)

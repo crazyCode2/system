@@ -5,20 +5,20 @@ import { isUrl } from '../utils/utils';
 // 数据
 const menuData = [
   {
-    name: '控制台',
-    icon: 'dashboard',
+    name: '漫画',
+    icon: 'book',
     path: 'dashboard',
     children: [{
-      name: '总览',
+      name: '腾讯漫画',
       path: 'analysis',
     }],
   },
   {
-    name: '系统设置',
-    icon: 'user',
+    name: '视频',
+    icon: 'youtube',
     path: 'syster',
     children: [{
-      name: '用户管理',
+      name: '优酷视频',
       path: 'user',
     }]
   }

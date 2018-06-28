@@ -5,7 +5,7 @@ import React,{PureComponent,Fragment} from 'react'
 import {connect} from 'react-redux'
 import {history} from '../../store'
 import styles from './index.less'
-import { Row, Col, Card, Form, Input, Select, 
+import { Row, Col, Card, Form, Input, Select,
   Button,
    DatePicker, Badge, Table } from 'antd';
 // import moment from 'moment';
@@ -124,7 +124,7 @@ class UserList extends PureComponent{
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>
             <Button type="primary" htmlType="submit">查询</Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>  
+            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
           </span>
         </div>
       </Form>
@@ -164,7 +164,7 @@ class UserList extends PureComponent{
               payload:true,
             })
 
-            setTimeout(() => {                                    
+            setTimeout(() => {
               this.props.dispatch({
                 type:"listload",
                 payload:false,

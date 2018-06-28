@@ -17,6 +17,4 @@ const userdata = Mock.mock('/api/userdata',{
     ]
 })
 
-
-
 export default userdata;
